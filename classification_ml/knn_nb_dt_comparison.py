@@ -15,6 +15,7 @@ from tkinter import *
 import itertools
 import matplotlib.pyplot as plt
 from matplotlib import style
+import time
 style.use("ggplot")
 
 dataset = pd.read_csv("./pima-indians-diabetes.csv");
@@ -112,6 +113,7 @@ def compare():
 	y = dataset.iloc[:, -1] #contains labels
 
 	X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.10, random_state = 42)  
+	#print(X_test[0])
 	acc,conf=dt(X_train,X_test,y_train,y_test)
 	a1.append(acc)
 	acc,conf=knn(X_train,X_test,y_train,y_test)
@@ -171,7 +173,110 @@ def compare():
 	  
 	# function to show the plot 
 	plt.show() 
+#Number of times pregnant,Plasma glucose concentration a 2 hours in an oral glucose tolerance test,Diastolic blood pressure (mm Hg),
+#Triceps skin fold thickness (mm),serum_insulin,Body mass index (weight in kg/(height in m)^2),Diabetes pedigree function,Age (years)
+def manual():
+	man=tk.Tk()   
+#root.geometry("200x200")                                  
+	lmain = tk.Label(master=man)
+	lmain.grid(row=0,column=0, rowspan=10, padx=10, pady=10)
 
+	info1=Label(man, height=1, width=30,text="Enter Plasma glucose concentration",font=("Helvetica bold", 20))
+	textBox1=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info2=Label(man, height=1, width=30,text="Number of times pregnant",font=("Helvetica bold", 20))
+	textBox2=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info3=Label(man, height=1, width=30,text="Diastolic blood pressure",font=("Helvetica bold", 20))
+	textBox3=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info4=Label(man, height=1, width=30,text="Triceps skin folds thickness",font=("Helvetica bold", 20))
+	textBox4=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info5=Label(man, height=1, width=30,text="Serum insulin",font=("Helvetica bold", 20))
+	textBox5=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info6=Label(man, height=1, width=30,text="Weight (kg)",font=("Helvetica bold", 20))
+	textBox6=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info7=Label(man, height=1, width=30,text="Height (cm)",font=("Helvetica bold", 20))
+	textBox7=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info8=Label(man, height=1, width=30,text="Diabetes pedigree function",font=("Helvetica bold", 20))
+	textBox8=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+	info9=Label(man, height=1, width=30,text="Age",font=("Helvetica bold", 20))
+	textBox9=Text(man, height=1, width=5,font=("Helvetica bold", 20))
+
+	info1.grid(row=1,column=0, padx=5, pady=5)
+	textBox1.grid(row=1,column=1, padx=5, pady=5)
+
+	info2.grid(row=2,column=0, padx=5, pady=5)
+	textBox2.grid(row=2,column=1, padx=5, pady=5)
+
+	info3.grid(row=3,column=0, padx=5, pady=5)
+	textBox3.grid(row=3,column=1, padx=5, pady=5)
+
+	info4.grid(row=4,column=0, padx=5, pady=5)
+	textBox4.grid(row=4,column=1, padx=5, pady=5)
+
+	info5.grid(row=5,column=0, padx=5, pady=5)
+	textBox5.grid(row=5,column=1, padx=5, pady=5)
+
+	info6.grid(row=6,column=0, padx=5, pady=5)
+	textBox6.grid(row=6,column=1, padx=5, pady=5)
+
+	info7.grid(row=7,column=0, padx=5, pady=5)
+	textBox7.grid(row=7,column=1, padx=5, pady=5)
+
+	info8.grid(row=8,column=0, padx=5, pady=5)
+	textBox8.grid(row=8,column=1, padx=5, pady=5)
+
+	info9.grid(row=9,column=0, padx=5, pady=5)
+	textBox9.grid(row=9,column=1, padx=5, pady=5)
+
+
+	buttonCommit=tk.Button(man, height=3, width=15, text="Submit",command=lambda:retrieve_input(man,textBox1,textBox2,textBox3,textBox4,textBox5,textBox6,textBox7,textBox8,textBox9),activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 15))
+	#command=lambda: retrieve_input() >>> just means do this when i press the button
+	
+	buttonCommit.grid(row=10,padx=5,pady=5)
+	#a = Button(master=man, text="KNN",height=3,width=15,command=lambda: knn(X_train, X_test, y_train, y_test,choice=1),activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 13))
+	#a.grid(row=1,column=0, padx=5, pady=5)
+	man.title("Manual Input")   
+	man.mainloop()
+
+def retrieve_input(man,a,b,c,d,e,f,g,h,i):
+	value=[0,0,0,0,0,0,0,0]
+	value[1]=int(a.get("1.0","end-1c"))
+	value[0]=int(b.get("1.0","end-1c"))
+	value[2]=int(c.get("1.0","end-1c"))
+	value[3]=int(d.get("1.0","end-1c"))
+	value[4]=int(e.get("1.0","end-1c"))
+	wt=int(f.get("1.0","end-1c"))
+	ht=(int(g.get("1.0","end-1c")))/100
+	value[5]=round((wt/pow(ht,2)),3)
+	value[6]=round(float(h.get("1.0","end-1c")),3)
+	value[7]=int(i.get("1.0","end-1c"))
+
+	#value=
+	classifier = KNeighborsClassifier(n_neighbors=15)
+	classifier.fit(X_train, y_train)  #the model gets train using this 
+	#print(value)
+	value=np.array(value)
+	value=value.reshape(1,-1)
+	#print(value)
+	#print(value.shape)
+	y_pred = classifier.predict(value) 
+	man.destroy()
+	man.quit()
+
+	show=tk.Tk()
+	if y_pred==1:
+		mess="Congratulations you have diabetes!! :D"
+	else:
+		mess="Sorry you don't have diabetes :( "
+
+	info1=Label(show,text=mess,font=("Helvetica bold", 20))
+
+	info1.pack()
+	show.title("Result")
+	show.mainloop()
+	#time.sleep(1)
+		
+	#show.destroy()
+	#show.quit()
 
 def plot_confusion_matrix(cm,topic,classes=['Positive','Negative'],cmap=plt.cm.Blues):
 	"""
@@ -215,8 +320,10 @@ c = Button(master=root, text="Decision Tree",height=3,width=15,command=lambda: d
 c.grid(row=3,column=0, padx=5, pady=5)
 d = Button(master=root, text="Compare",height=3,width=15,command=compare, activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 13))
 d.grid(row=4,column=0, padx=5, pady=5)
-e = Button(master=root, text="Exit",height=3,width=15,command=quit, activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 13))
+e = Button(master=root, text="Manual Input",height=3,width=15,command=manual, activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 13))
 e.grid(row=5,column=0, padx=5, pady=5)
+f = Button(master=root, text="Exit",height=3,width=15,command=quit, activebackground="black", activeforeground="cyan", bd=4, bg="#123d63", fg="gold", font=("Helvetica bold", 13))
+f.grid(row=6,column=0, padx=5, pady=5)
 #text6= tk.Label(root, text= ( 'COUNT = '+ str(det_peeps) ) ,font=("Helvetica bold", 15)).grid(row=4,column=0)
 root.title("Classification comparison")   
 root.mainloop()
